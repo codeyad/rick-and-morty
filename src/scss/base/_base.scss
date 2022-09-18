@@ -1,0 +1,6 @@
+@use "../abstracts/variables" as v;
+
+html,
+body {
+  font-family: v.$font-karla;
+}
