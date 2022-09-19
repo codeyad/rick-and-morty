@@ -1,0 +1,28 @@
+header {
+  display: flex;
+  flex-direction: column;
+}
+
+#logo {
+  background-image: url("../../public/img/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 0 0.75rem #4fd625);
+  height: 10em;
+  margin: 0 1em;
+}
+
+#filters {
+  display: flex;
+  flex-direction: column;
+  input {
+    display: block;
+    align-items: center;
+    height: 4em;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 0 1em;
+  }
+}
