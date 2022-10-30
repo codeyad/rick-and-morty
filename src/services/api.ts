@@ -1,10 +1,6 @@
-const BASE_URL = "https://rickandmortyapi.com/api";
+import { filters } from "../interface";
 
-interface filters {
-  species: string | null;
-  gender: string | null;
-  status: string | null;
-}
+const BASE_URL = "https://rickandmortyapi.com/api";
 
 export const getCharacter = ({ species, gender, status }: filters) => {
   return get(

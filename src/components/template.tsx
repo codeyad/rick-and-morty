@@ -1,15 +1,21 @@
 import { getCharacter } from "../services/api";
 import Modal from "./common/modal";
 import "./template.scss";
+import { useState } from "react";
 
 type Props = {
   children?: React.ReactNode;
 };
 
 function Template({ children }: Props) {
+  const [openedModal, setOpenedModal] = useState(false);
+
   const handleModalSubmit = (data: any) => {
+    setOpenedModal(false);
     getCharacter(data).then(data => console.log(data));
   };
+
+  const handleOpenModal = () => setOpenedModal(true);
 
   return (
     <>
@@ -29,9 +35,9 @@ function Template({ children }: Props) {
             id=''
             placeholder='Filter by name...'
           />
-          <div>
+          <div onClick={handleOpenModal}>
             <label htmlFor=''>ADVANCED FILTERS</label>
-            <Modal isShown={true} onSubmit={handleModalSubmit} />
+            <Modal isShown={openedModal} onSubmit={handleModalSubmit} />
           </div>
         </div>
       </header>
