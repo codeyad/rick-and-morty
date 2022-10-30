@@ -4,3 +4,28 @@ html,
 body {
   font-family: v.$font-karla;
 }
+
+input,
+select {
+  display: block;
+  align-items: center;
+  height: 4rem;
+  width: 90%;
+  border: 1px solid #b6b6b6;
+  border-radius: 10px;
+  margin: 0.4rem 1rem;
+}
+
+button {
+  display: block;
+  align-items: center;
+  height: 2.5rem;
+  width: 90%;
+  margin: 1.5rem 1rem 0;
+  border: none;
+  border-radius: 10px;
+  background-color: #e5f1fc;
+  box-shadow: 0 2px #b6b6b6;
+  color: #559fef;
+  font-weight: bold;
+}

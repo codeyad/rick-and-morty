@@ -59,42 +59,53 @@ function Modal({ children, response, isShown, onSubmit }: Props) {
         backgroundColor: "rgba(0,0,0,0.4)",
       }}
     >
-      <form
-        onSubmit={handleSubmit}
+      <main
         style={{
           display: "flex",
           alignItems: "center",
-          flexDirection: "column",
           alignContent: "center",
           justifyContent: "center",
           height: "100%",
         }}
       >
-        <select name='species' onChange={handleChange}>
-          {" "}
-          {selectValues.species?.map(s => (
-            <option key={s.id} value={s.value}>
-              {s.value || "species"}
-            </option>
-          ))}
-        </select>
-        <select name='gender' onChange={handleChange}>
-          {selectValues.gender?.map(g => (
-            <option key={g.id} value={g.value}>
-              {g.value || "gender"}
-            </option>
-          ))}
-        </select>
-        <select name='status' onChange={handleChange}>
-          {selectValues.status?.map(s => (
-            <option key={s.id} value={s.value}>
-              {s.value || "status"}
-            </option>
-          ))}
-        </select>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            width: "19rem",
+            height: "21rem",
+            backgroundColor: "white",
+            borderRadius: 10,
+          }}
+        >
+          <select name='species' onChange={handleChange}>
+            {" "}
+            {selectValues.species?.map(s => (
+              <option key={s.id} value={s.value}>
+                {s.value || "species"}
+              </option>
+            ))}
+          </select>
+          <select name='gender' onChange={handleChange}>
+            {selectValues.gender?.map(g => (
+              <option key={g.id} value={g.value}>
+                {g.value || "gender"}
+              </option>
+            ))}
+          </select>
+          <select name='status' onChange={handleChange}>
+            {selectValues.status?.map(s => (
+              <option key={s.id} value={s.value}>
+                {s.value || "status"}
+              </option>
+            ))}
+          </select>
 
-        <button type='submit'>APPLY</button>
-      </form>
+          <button type='submit'>APPLY</button>
+        </form>
+      </main>
     </div>
   );
 }
