@@ -1,3 +1,5 @@
+import { getCharacter } from "../services/api";
+import Modal from "./common/modal";
 import "./template.scss";
 
 type Props = {
@@ -5,6 +7,10 @@ type Props = {
 };
 
 function Template({ children }: Props) {
+  const handleModalSubmit = (data: any) => {
+    getCharacter(data).then(data => console.log(data));
+  };
+
   return (
     <>
       <header>
@@ -25,6 +31,7 @@ function Template({ children }: Props) {
           />
           <div>
             <label htmlFor=''>ADVANCED FILTERS</label>
+            <Modal isShown={true} onSubmit={handleModalSubmit} />
           </div>
         </div>
       </header>
