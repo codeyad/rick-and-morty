@@ -1,7 +1,7 @@
 import { getCharacter } from "../services/api";
 import Modal from "./common/modal";
 import "./template.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Props = {
   children?: React.ReactNode;
@@ -17,6 +17,7 @@ function Template({ children }: Props) {
 
   const handleOpenModal = () => setOpenedModal(true);
 
+  const handleCloseModal = () => setOpenedModal(false);
   return (
     <>
       <header>
@@ -37,12 +38,16 @@ function Template({ children }: Props) {
           />
           <div onClick={handleOpenModal}>
             <label htmlFor=''>ADVANCED FILTERS</label>
-            <Modal isShown={openedModal} onSubmit={handleModalSubmit} />
           </div>
         </div>
       </header>
       <main>{children}</main>
       <footer></footer>
+      <Modal
+        isShown={openedModal}
+        onSubmit={handleModalSubmit}
+        onClose={handleCloseModal}
+      />
     </>
   );
 }

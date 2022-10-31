@@ -2,12 +2,12 @@ import { useState } from "react";
 
 interface Props {
   children?: React.ReactNode;
-  response?: (params: any) => any;
   isShown: boolean;
   onSubmit?: (data: any) => void;
+  onClose?: () => void;
 }
 
-function Modal({ children, response, isShown, onSubmit }: Props) {
+function Modal({ children, isShown, onSubmit, onClose }: Props) {
   const selectValues = {
     species: [
       { value: "", id: 0 },
@@ -30,9 +30,9 @@ function Modal({ children, response, isShown, onSubmit }: Props) {
   };
 
   const [selected, setSelected] = useState({
-    species: "human",
-    gender: "male",
-    status: "alive",
+    species: "",
+    gender: "",
+    status: "",
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,6 +42,10 @@ function Modal({ children, response, isShown, onSubmit }: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected({ ...selected, [e.target.name]: e.target.value });
+  };
+
+  const handleClose = () => {
+    onClose && onClose();
   };
 
   if (!isShown) return null;
@@ -56,7 +60,7 @@ function Modal({ children, response, isShown, onSubmit }: Props) {
         width: "100%",
         height: "100%",
         overflow: "auto",
-        backgroundColor: "rgba(0,0,0,0.4)",
+        backgroundColor: "rgba(0,0,0,0.6)",
       }}
     >
       <main
@@ -80,6 +84,27 @@ function Modal({ children, response, isShown, onSubmit }: Props) {
             borderRadius: 10,
           }}
         >
+          <div
+            style={{
+              position: "relative",
+              width: "90%",
+              margin: "0.4rem 1rem",
+            }}
+          >
+            <h3 style={{ display: "inline-block" }}>Filters</h3>
+            <i
+              style={{
+                float: "right",
+                fontStyle: "normal",
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                color: "#b6b6b6",
+              }}
+              onClick={handleClose}
+            >
+              x
+            </i>
+          </div>
           <select name='species' onChange={handleChange}>
             {" "}
             {selectValues.species?.map(s => (
@@ -102,7 +127,6 @@ function Modal({ children, response, isShown, onSubmit }: Props) {
               </option>
             ))}
           </select>
-
           <button type='submit'>APPLY</button>
         </form>
       </main>
