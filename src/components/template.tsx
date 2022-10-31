@@ -36,7 +36,7 @@ function Template({ children }: Props) {
             id=''
             placeholder='Filter by name...'
           />
-          <div onClick={handleOpenModal}>
+          <div className='button' onClick={handleOpenModal}>
             <label htmlFor=''>ADVANCED FILTERS</label>
           </div>
         </div>

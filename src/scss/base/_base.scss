@@ -14,18 +14,35 @@ select {
   border: 1px solid #b6b6b6;
   border-radius: 10px;
   margin: 0.4rem 1rem;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  color: #666666;
 }
 
-button[type="submit"] {
-  display: block;
+button[type="submit"],
+.button {
+  display: flex;
+  justify-content: center;
   align-items: center;
   height: 2.5rem;
   width: 90%;
-  margin: 1.5rem 1rem 0;
+  margin: 1.5rem 1rem 1rem;
   border: none;
   border-radius: 10px;
   background-color: #e5f1fc;
   box-shadow: 0 2px #b6b6b6;
   color: #559fef;
   font-weight: bold;
+  &:active {
+    color: #e5f1fc;
+    background-color: #559fef;
+  }
+  label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+  }
 }
