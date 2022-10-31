@@ -1,0 +1,17 @@
+.card {
+  box-shadow: 0 5px 10px #b6b6b6;
+  border-radius: 10px;
+  margin: 0.8rem 0;
+  width: 90%;
+  img {
+    border-radius: 10px 10px 0px 0px;
+    width: 100%;
+  }
+  h3 {
+    margin: 0 0 0.2rem 1rem;
+    font-weight: bolder;
+  }
+  p {
+    margin: 0 0 0.8rem 1rem;
+  }
+}

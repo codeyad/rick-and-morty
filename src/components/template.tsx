@@ -8,16 +8,6 @@ type Props = {
 };
 
 function Template({ children }: Props) {
-  const [openedModal, setOpenedModal] = useState(false);
-
-  const handleModalSubmit = (data: any) => {
-    setOpenedModal(false);
-    getCharacter(data).then(data => console.log(data));
-  };
-
-  const handleOpenModal = () => setOpenedModal(true);
-
-  const handleCloseModal = () => setOpenedModal(false);
   return (
     <>
       <header>
@@ -28,26 +18,9 @@ function Template({ children }: Props) {
             <li>nav</li>
           </ul>
         </nav>
-        <div id='logo'></div>
-        <div id='filters'>
-          <input
-            type='text'
-            name='name'
-            id=''
-            placeholder='Filter by name...'
-          />
-          <div className='button' onClick={handleOpenModal}>
-            <label htmlFor=''>ADVANCED FILTERS</label>
-          </div>
-        </div>
       </header>
       <main>{children}</main>
       <footer></footer>
-      <Modal
-        isShown={openedModal}
-        onSubmit={handleModalSubmit}
-        onClose={handleCloseModal}
-      />
     </>
   );
 }
