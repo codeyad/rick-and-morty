@@ -10,10 +10,9 @@ select {
   display: block;
   align-items: center;
   height: 4rem;
-  width: 90%;
   border: 1px solid #b6b6b6;
   border-radius: 10px;
-  margin: 0.4rem 1rem;
+  margin: 0.4rem 0rem;
   text-transform: capitalize;
   font-size: 0.9rem;
   color: #666666;
@@ -25,8 +24,7 @@ button[type="submit"],
   justify-content: center;
   align-items: center;
   height: 2.5rem;
-  width: 90%;
-  margin: 1.5rem 1rem 1rem;
+  margin: 1.5rem 0rem 1rem;
   border: none;
   border-radius: 10px;
   background-color: #e5f1fc;

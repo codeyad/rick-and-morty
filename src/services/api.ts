@@ -6,9 +6,10 @@ export const getCharacter = (
   { species, gender, status }: filters,
   page: string = ""
 ) => {
+  console.log(species);
   return get(
     "character",
-    `?species=${species}&gender=${gender}&status=${status}`,
+    `species=${species}&gender=${gender}&status=${status}`,
     page
   );
 };

@@ -38,7 +38,34 @@ function Character() {
   const [openedModal, setOpenedModal] = useState(false);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [characterResult, setCharacterResult] = useState<CharacterResult>();
+  const [loading, setLoading] = useState(false);
 
+  const [selected, setSelected] = useState({
+    species: "",
+    gender: "",
+    status: "",
+  });
+
+  const selectValues = {
+    species: [
+      { value: "", id: 0 },
+      { value: "human", id: 1 },
+      { value: "alien", id: 2 },
+    ],
+    gender: [
+      { value: "", id: 0 },
+      { value: "male", id: 1 },
+      { value: "female", id: 2 },
+      { value: "genderless", id: 3 },
+      { value: "unknown", id: 4 },
+    ],
+    status: [
+      { value: "", id: 0 },
+      { value: "alive", id: 1 },
+      { value: "dead", id: 2 },
+      { value: "unknown", id: 3 },
+    ],
+  };
   useEffect(() => {
     getCharacter({ species: "", gender: "", status: "" }).then(
       (data: CharacterResult) => {
@@ -55,9 +82,14 @@ function Character() {
     };
   }, [characterResult]);
 
-  const handleModalSubmit = (data: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelected({ ...selected, [e.target.name]: e.target.value });
+  };
+
+  const handleModalSubmit = () => {
     setOpenedModal(false);
-    getCharacter(data).then((data: CharacterResult) => {
+    console.log(selected);
+    getCharacter(selected).then((data: CharacterResult) => {
       setCharacters(data.results);
       setCharacterResult(data);
     });
@@ -76,14 +108,18 @@ function Character() {
       const page = characterResult?.info.next?.split("page=")[1];
 
       if (!page) return;
-      getCharacter({ species: "", gender: "", status: "" }, page)
-        .then((data: CharacterResult) => {
-          setCharacters([...characters, ...data.results]);
-          setCharacterResult(data);
-        })
-        .catch(error => {
-          console.log("ERROR:", error);
-        });
+      setLoading(true);
+      setTimeout(() => {
+        getCharacter({ species: "", gender: "", status: "" }, page)
+          .then((data: CharacterResult) => {
+            setCharacters([...characters, ...data.results]);
+            setCharacterResult(data);
+          })
+          .catch(error => {
+            console.log("ERROR:", error);
+          })
+          .finally(() => setLoading(false));
+      }, 500);
     }
   };
 
@@ -105,12 +141,36 @@ function Character() {
           <p>{c.species}</p>
         </div>
       ))}
-
+      {loading ? <img id='spinner' src='img/spinner.gif' alt='' /> : null}
       <Modal
         isShown={openedModal}
         onSubmit={handleModalSubmit}
         onClose={handleCloseModal}
-      />
+      >
+        {" "}
+        <select name='species' onChange={handleChange}>
+          {" "}
+          {selectValues.species?.map(s => (
+            <option key={s.id} value={s.value}>
+              {s.value || "species"}
+            </option>
+          ))}
+        </select>
+        <select name='gender' onChange={handleChange}>
+          {selectValues.gender?.map(g => (
+            <option key={g.id} value={g.value}>
+              {g.value || "gender"}
+            </option>
+          ))}
+        </select>
+        <select name='status' onChange={handleChange}>
+          {selectValues.status?.map(s => (
+            <option key={s.id} value={s.value}>
+              {s.value || "status"}
+            </option>
+          ))}
+        </select>
+      </Modal>
     </div>
   );
 }

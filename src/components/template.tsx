@@ -1,7 +1,4 @@
-import { getCharacter } from "../services/api";
-import Modal from "./common/modal";
 import "./template.scss";
-import { useState, useEffect } from "react";
 
 type Props = {
   children?: React.ReactNode;
