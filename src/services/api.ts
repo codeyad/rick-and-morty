@@ -1,15 +1,15 @@
-import { filters } from "../interface";
+import { Filters } from "../interface";
 
 const BASE_URL = "https://rickandmortyapi.com/api";
 
 export const getCharacter = (
-  { species, gender, status }: filters,
+  { species, gender, status, name }: Filters,
   page: string = ""
 ) => {
   console.log(species);
   return get(
     "character",
-    `species=${species}&gender=${gender}&status=${status}`,
+    `species=${species}&gender=${gender}&status=${status}&name=${name}`,
     page
   );
 };
@@ -23,9 +23,14 @@ export const getEpisode = () => {
 };
 
 const get = async (endpoint: string, filters?: string, page: string = "") => {
-  const response = await fetch(
-    `${BASE_URL}/${endpoint}/?page=${page}&${filters}`
-  );
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(
+      `${BASE_URL}/${endpoint}/?page=${page}&${filters}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    debugger;
+    return [];
+  }
 };

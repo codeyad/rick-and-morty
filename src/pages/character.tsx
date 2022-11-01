@@ -3,14 +3,18 @@ import Modal from "../components/common/modal";
 import { getCharacter } from "../services/api";
 import "./character.scss";
 import { debounce } from "lodash";
+import CharacterModal from "./../components/modals/character.modal";
+import CharacterCard from "../components/characterCard";
+import { Filters } from "./../interface/index";
 interface CharacterResult {
-  info: {
+  info?: {
     count: number;
     next: string;
     pages: number;
     prev: string;
   };
-  results: Character[];
+  results?: Character[];
+  error?: string;
 }
 
 interface Character {
@@ -34,45 +38,30 @@ interface Character {
   url: string;
 }
 
+interface Selected {
+  species: string;
+  gender: string;
+  status: string;
+  name?: string;
+}
+
 function Character() {
   const [openedModal, setOpenedModal] = useState(false);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [characterResult, setCharacterResult] = useState<CharacterResult>();
   const [loading, setLoading] = useState(false);
-
-  const [selected, setSelected] = useState({
+  const [filters, setFilters] = useState<Filters>({
+    name: "",
     species: "",
     gender: "",
     status: "",
   });
 
-  const selectValues = {
-    species: [
-      { value: "", id: 0 },
-      { value: "human", id: 1 },
-      { value: "alien", id: 2 },
-    ],
-    gender: [
-      { value: "", id: 0 },
-      { value: "male", id: 1 },
-      { value: "female", id: 2 },
-      { value: "genderless", id: 3 },
-      { value: "unknown", id: 4 },
-    ],
-    status: [
-      { value: "", id: 0 },
-      { value: "alive", id: 1 },
-      { value: "dead", id: 2 },
-      { value: "unknown", id: 3 },
-    ],
-  };
   useEffect(() => {
-    getCharacter({ species: "", gender: "", status: "" }).then(
-      (data: CharacterResult) => {
-        setCharacters(data.results);
-        setCharacterResult(data);
-      }
-    );
+    getCharacter(filters).then((data: CharacterResult) => {
+      setCharacters(data.results || []);
+      setCharacterResult(data);
+    });
   }, []);
 
   useEffect(() => {
@@ -82,17 +71,21 @@ function Character() {
     };
   }, [characterResult]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelected({ ...selected, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    getCharacter(filters)
+      .then((data: CharacterResult) => {
+        setCharacters(data.results || []);
+        setCharacterResult(data);
+      })
+      .catch(error => {
+        console.log("ERROR:", error);
+      })
+      .finally(() => setLoading(false));
+  }, [filters]);
 
-  const handleModalSubmit = () => {
+  const handleModalSubmit = (selected: Selected) => {
+    setFilters({ ...filters, ...selected });
     setOpenedModal(false);
-    console.log(selected);
-    getCharacter(selected).then((data: CharacterResult) => {
-      setCharacters(data.results);
-      setCharacterResult(data);
-    });
   };
 
   const handleOpenModal = () => setOpenedModal(true);
@@ -105,18 +98,17 @@ function Character() {
 
     if (bottom) {
       window.removeEventListener("scroll", debounceFunction);
-      const page = characterResult?.info.next?.split("page=")[1];
+      const page = characterResult?.info?.next?.split("page=")[1];
 
       if (!page) return;
       setLoading(true);
       setTimeout(() => {
-        getCharacter({ species: "", gender: "", status: "" }, page)
+        getCharacter(filters, page)
           .then((data: CharacterResult) => {
-            setCharacters([...characters, ...data.results]);
-            setCharacterResult(data);
-          })
-          .catch(error => {
-            console.log("ERROR:", error);
+            if (data.results) {
+              setCharacters([...characters, ...data.results]);
+              setCharacterResult(data);
+            }
           })
           .finally(() => setLoading(false));
       }, 500);
@@ -125,52 +117,35 @@ function Character() {
 
   const debounceFunction = debounce(handleScroll, 1000);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilters({
+      ...filters,
+      name: e.target.value.trim().replace(/\s+/g, "+"),
+    });
+  };
+
   return (
     <div>
       <div id='logo'></div>
       <div id='filters'>
-        <input type='text' name='name' id='' placeholder='Filter by name...' />
+        <input
+          type='text'
+          onChange={debounce(handleInputChange, 1000)}
+          name='name'
+          id=''
+          placeholder='Filter by name...'
+        />
         <div className='button' onClick={handleOpenModal}>
           <label htmlFor=''>ADVANCED FILTERS</label>
         </div>
       </div>
-      {characters.map(c => (
-        <div key={c.id} className='card'>
-          <img src={c.image} alt='' />
-          <h3>{c.name}</h3>
-          <p>{c.species}</p>
-        </div>
-      ))}
+      <CharacterCard characters={characters} />
       {loading ? <img id='spinner' src='img/spinner.gif' alt='' /> : null}
-      <Modal
+      <CharacterModal
         isShown={openedModal}
         onSubmit={handleModalSubmit}
         onClose={handleCloseModal}
-      >
-        {" "}
-        <select name='species' onChange={handleChange}>
-          {" "}
-          {selectValues.species?.map(s => (
-            <option key={s.id} value={s.value}>
-              {s.value || "species"}
-            </option>
-          ))}
-        </select>
-        <select name='gender' onChange={handleChange}>
-          {selectValues.gender?.map(g => (
-            <option key={g.id} value={g.value}>
-              {g.value || "gender"}
-            </option>
-          ))}
-        </select>
-        <select name='status' onChange={handleChange}>
-          {selectValues.status?.map(s => (
-            <option key={s.id} value={s.value}>
-              {s.value || "status"}
-            </option>
-          ))}
-        </select>
-      </Modal>
+      />
     </div>
   );
 }

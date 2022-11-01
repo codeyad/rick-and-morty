@@ -3,9 +3,10 @@ interface Props {
   isShown: boolean;
   onSubmit?: () => void;
   onClose?: () => void;
+  submitName?: string;
 }
 
-function Modal({ children, isShown, onSubmit, onClose }: Props) {
+function Modal({ children, isShown, onSubmit, onClose, submitName }: Props) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit && onSubmit();
@@ -72,7 +73,7 @@ function Modal({ children, isShown, onSubmit, onClose }: Props) {
             </i>
           </div>
           {children}
-          <button type='submit'>APPLY</button>
+          <button type='submit'>{submitName || "APPLY"}</button>
         </form>
       </main>
     </div>
