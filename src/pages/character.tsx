@@ -49,7 +49,7 @@ function Character() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", debounce(debounceFunction, 1000));
+    window.addEventListener("scroll", debounceFunction);
     return function cleanup() {
       window.removeEventListener("scroll", debounceFunction);
     };
@@ -72,7 +72,9 @@ function Character() {
       window.innerHeight + window.scrollY >= document.body.offsetHeight;
 
     if (bottom) {
+      window.removeEventListener("scroll", debounceFunction);
       const page = characterResult?.info.next?.split("page=")[1];
+
       if (!page) return;
       getCharacter({ species: "", gender: "", status: "" }, page)
         .then((data: CharacterResult) => {
