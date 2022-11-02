@@ -2,6 +2,10 @@ import { Filters } from "../interface";
 
 const BASE_URL = "https://rickandmortyapi.com/api";
 
+export const getCharacterProfile = (id: string) => {
+  return get(`character/${id}`, `species=&gender=$&status=&name=`);
+};
+
 export const getCharacter = (
   { species, gender, status, name }: Filters,
   page: string = ""

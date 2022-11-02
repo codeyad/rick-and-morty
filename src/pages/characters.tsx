@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import Modal from "../components/common/modal";
 import { getCharacter } from "../services/api";
 import "./character.scss";
 import { debounce } from "lodash";
-import CharacterModal from "./../components/modals/character.modal";
+import CharacterModal from "../components/modals/character.modal";
 import CharacterCard from "../components/characterCard";
-import { Filters } from "./../interface/index";
+import { Filters, Character } from "../interface/index";
 interface CharacterResult {
   info?: {
     count: number;
@@ -17,27 +16,6 @@ interface CharacterResult {
   error?: string;
 }
 
-interface Character {
-  created: string;
-  episode: string[];
-  gender: string;
-  id: number;
-  image: string;
-  location: {
-    name: string;
-    url: string;
-  };
-  name: string;
-  origin: {
-    name: string;
-    url: string;
-  };
-  species: string;
-  status: string;
-  type: string;
-  url: string;
-}
-
 interface Selected {
   species: string;
   gender: string;
@@ -45,7 +23,7 @@ interface Selected {
   name?: string;
 }
 
-function Character() {
+const Characters = () => {
   const [openedModal, setOpenedModal] = useState(false);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [characterResult, setCharacterResult] = useState<CharacterResult>();
@@ -141,6 +119,6 @@ function Character() {
       />
     </div>
   );
-}
+};
 
-export default Character;
+export default Characters;
