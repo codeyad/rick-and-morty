@@ -10,9 +10,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Template>
-      <Router />
-    </Template>
+    <Router />
   </React.StrictMode>
 );
 

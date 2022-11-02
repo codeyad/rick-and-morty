@@ -30,7 +30,6 @@ const get = async (endpoint: string, filters?: string, page: string = "") => {
     const data = await response.json();
     return data;
   } catch (error) {
-    debugger;
     return [];
   }
 };

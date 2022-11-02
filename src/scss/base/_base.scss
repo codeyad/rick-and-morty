@@ -13,9 +13,14 @@ select {
   border: 1px solid #b6b6b6;
   border-radius: 10px;
   margin: 0.4rem 0rem;
-  text-transform: capitalize;
+
   font-size: 0.9rem;
   color: #666666;
+  padding: 0 0.7rem;
+}
+
+select {
+  text-transform: capitalize;
 }
 
 button[type="submit"],

@@ -1,22 +1,17 @@
 import "./template.scss";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 type Props = {
   children?: React.ReactNode;
 };
 
 function Template({ children }: Props) {
+  const [menuShown, setMenuShown] = useState(true);
+
   return (
     <>
-      <header>
-        <nav>
-          <ul>
-            <li>nav</li>
-            <li>nav</li>
-            <li>nav</li>
-          </ul>
-        </nav>
-      </header>
-      <main>{children}</main>
+      {children}
       <footer></footer>
     </>
   );
