@@ -17,29 +17,44 @@ function Router() {
         <header>
           <nav>
             <div id='header-bar'>
-              <img id='header-logo' src='img/logo-black.png' alt='' />
-              <span>opener</span>
+              <NavLink onClick={() => setMenuShown(false)} to='characters'>
+                <img id='header-logo' src='img/logo-black.png' alt='' />
+              </NavLink>
+              <div
+                onClick={() => setMenuShown(!menuShown)}
+                className={`hamburger-lines ${menuShown && "menu-opened"}`}
+              >
+                <span className='line line1'></span>
+                <span className='line line2'></span>
+                <span className='line line3'></span>
+              </div>
             </div>
 
-            <ul>
+            <ul className={`${menuShown && "menu-list-opened"}`}>
               <li>
-                <NavLink to='character'>Characters</NavLink>
+                <NavLink onClick={() => setMenuShown(false)} to='characters'>
+                  Characters
+                </NavLink>
               </li>
               <li>
-                <NavLink to='location'>Locationa</NavLink>
+                <NavLink onClick={() => setMenuShown(false)} to='locations'>
+                  Locations
+                </NavLink>
               </li>
               <li>
-                <NavLink to='episode'>Episodes</NavLink>
+                <NavLink onClick={() => setMenuShown(false)} to='episodes'>
+                  Episodes
+                </NavLink>
               </li>
             </ul>
           </nav>
         </header>
         <main>
           <Routes>
-            <Route path='/' element={<App />} />
-            <Route path='character' element={<Character />} />
-            <Route path='episode' element={<Episode />} />
-            <Route path='location' element={<Location />} />
+            <Route path='/' element={<Character />} />
+            <Route path='characters' element={<Character />} />
+            <Route path='episodes' element={<Episode />} />
+            <Route path='locations' element={<Location />} />
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </main>
