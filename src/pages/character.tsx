@@ -58,10 +58,7 @@ function Character() {
   });
 
   useEffect(() => {
-    getCharacter(filters).then((data: CharacterResult) => {
-      setCharacters(data.results || []);
-      setCharacterResult(data);
-    });
+    getProcessedCharacters();
   }, []);
 
   useEffect(() => {
@@ -72,15 +69,7 @@ function Character() {
   }, [characterResult]);
 
   useEffect(() => {
-    getCharacter(filters)
-      .then((data: CharacterResult) => {
-        setCharacters(data.results || []);
-        setCharacterResult(data);
-      })
-      .catch(error => {
-        console.log("ERROR:", error);
-      })
-      .finally(() => setLoading(false));
+    getProcessedCharacters();
   }, [filters]);
 
   const handleModalSubmit = (selected: Selected) => {
@@ -98,21 +87,25 @@ function Character() {
 
     if (bottom) {
       window.removeEventListener("scroll", debounceFunction);
-      const page = characterResult?.info?.next?.split("page=")[1];
-
-      if (!page) return;
-      setLoading(true);
       setTimeout(() => {
-        getCharacter(filters, page)
-          .then((data: CharacterResult) => {
-            if (data.results) {
-              setCharacters([...characters, ...data.results]);
-              setCharacterResult(data);
-            }
-          })
-          .finally(() => setLoading(false));
+        const currentPage = characterResult?.info?.next?.split("page=")[1];
+        getProcessedCharacters(currentPage);
       }, 500);
     }
+  };
+
+  const getProcessedCharacters = (currentPage = "") => {
+    setLoading(true);
+    getCharacter(filters, currentPage)
+      .then((data: CharacterResult) => {
+        if (data.results) {
+          setCharacters(
+            currentPage ? [...characters, ...data.results] : data.results
+          );
+          setCharacterResult(data);
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   const debounceFunction = debounce(handleScroll, 1000);

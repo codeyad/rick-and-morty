@@ -25,7 +25,7 @@ export const getEpisode = () => {
 const get = async (endpoint: string, filters?: string, page: string = "") => {
   try {
     const response = await fetch(
-      `${BASE_URL}/${endpoint}/?page=${page}&${filters}`
+      `${BASE_URL}/${endpoint}/?${filters}&page=${page}`
     );
     const data = await response.json();
     return data;

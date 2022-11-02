@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
 function Router() {
-  const [menuShown, setMenuShown] = useState(true);
+  const [menuShown, setMenuShown] = useState(false);
 
   return (
     <Template>
