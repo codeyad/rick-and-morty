@@ -3,7 +3,7 @@ import { Filters } from "../interface";
 const BASE_URL = "https://rickandmortyapi.com/api";
 
 export const getCharacterProfile = (id: string) => {
-  return get(`character/${id}`, `species=&gender=$&status=&name=`);
+  return get(`character/${id}`);
 };
 
 export const getCharacter = (
@@ -29,7 +29,7 @@ export const getEpisode = () => {
 const get = async (endpoint: string, filters?: string, page: string = "") => {
   try {
     const response = await fetch(
-      `${BASE_URL}/${endpoint}/?${filters}&page=${page}`
+      `${BASE_URL}/${endpoint}/?${filters ? filters + "&" : ""}page=${page}`
     );
     const data = await response.json();
     return data;
