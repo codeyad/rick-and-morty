@@ -2,17 +2,23 @@
   box-shadow: 0 5px 10px #b6b6b6;
   border-radius: 10px;
   margin: 1.5rem 0;
+
   cursor: pointer;
-  img {
-    border-radius: 10px 10px 0px 0px;
-    width: 100%;
-  }
-  h3 {
-    padding: 1rem 0 0.2rem 1rem;
-    font-weight: bolder;
-  }
-  p {
-    padding: 0 0 0.8rem 1rem;
+  a {
+    text-decoration: none;
+    color: #000000;
+
+    img {
+      border-radius: 10px 10px 0px 0px;
+      width: 100%;
+    }
+    h3 {
+      padding: 1rem 0 0.2rem 1rem;
+      font-weight: bolder;
+    }
+    p {
+      padding: 0 0 0.8rem 1rem;
+    }
   }
 }
 

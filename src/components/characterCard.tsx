@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface Character {
   created: string;
   episode: string[];
@@ -27,13 +29,18 @@ const CharacterCard = ({ characters }: Props) => {
   return (
     <>
       {characters.length ? (
-        characters.map(c => (
-          <div key={c.id} className='card'>
-            <img src={c.image} alt='' />
-            <h3>{c.name}</h3>
-            <p>{c.species}</p>
-          </div>
-        ))
+        characters.map(c => {
+          const route = `./${c.id}`;
+          return (
+            <div key={c.id} className='card'>
+              <Link to={route}>
+                <img src={c.image} alt='' />
+                <h3>{c.name}</h3>
+                <p>{c.species}</p>
+              </Link>
+            </div>
+          );
+        })
       ) : (
         <div className='card'>
           <img src='/img/404.jpg' alt='' />
