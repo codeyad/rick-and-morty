@@ -5,6 +5,8 @@ import { debounce } from "lodash";
 import CharacterModal from "../components/modals/character.modal";
 import CharacterCard from "../components/characterCard";
 import { Filters, Character } from "../interface/index";
+import Spinner from "../assets/images/spinner.gif";
+import Logo from "../assets/images/logo.png";
 interface CharacterResult {
   info?: {
     count: number;
@@ -97,7 +99,7 @@ const Characters = () => {
 
   return (
     <div>
-      <div id='logo'></div>
+      <div id='logo' style={{ backgroundImage: `url(${Logo})` }}></div>
       <div id='filters'>
         <input
           type='text'
@@ -111,7 +113,7 @@ const Characters = () => {
         </div>
       </div>
       <CharacterCard characters={characters} />
-      {loading ? <img id='spinner' src='img/spinner.gif' alt='' /> : null}
+      {loading ? <img id='spinner' src={Spinner} alt='' /> : null}
       <CharacterModal
         isShown={openedModal}
         onSubmit={handleModalSubmit}

@@ -7,6 +7,7 @@ import PageNotFound from "./../pages/404";
 import Template from "./../components/template";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import logoBlack from "../assets/images/logo-black.png";
 
 function Router() {
   const [menuShown, setMenuShown] = useState(false);
@@ -18,7 +19,7 @@ function Router() {
           <nav>
             <div id='header-bar'>
               <NavLink onClick={() => setMenuShown(false)} to='characters'>
-                <img id='header-logo' src='img/logo-black.png' alt='' />
+                <img id='header-logo' src={logoBlack} alt='' />
               </NavLink>
               <div
                 onClick={() => setMenuShown(!menuShown)}
