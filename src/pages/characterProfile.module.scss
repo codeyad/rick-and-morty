@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img {
+  border: 10px solid #f2f2f7;
+  border-radius: 50%;
+  width: 14rem;
+}
+
+.h1 {
+  font-weight: bolder;
+  text-align: center;
+}
+
+.section {
+  width: 100%;
+  h3 {
+    color: #8e8e93;
+  }
+}
+
+.back {
+  display: flex;
+  width: 100%;
+  img {
+    margin-right: 0.5rem;
+  }
+}
