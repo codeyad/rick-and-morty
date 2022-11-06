@@ -30,7 +30,7 @@ const CharacterCard = ({ characters }: Props) => {
     <>
       {characters.length ? (
         characters.map(c => {
-          const route = `./${c.id}`;
+          const route = `/characters/${c.id}`;
           return (
             <div key={c.id} className='card'>
               <Link to={route}>

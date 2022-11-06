@@ -24,9 +24,24 @@
 }
 
 .back {
-  display: flex;
   width: 100%;
+  a {
+    display: flex;
+    text-decoration: none;
+    color: #000000;
+  }
   img {
     margin-right: 0.5rem;
+  }
+}
+
+.tab {
+  padding: 0.5rem 0;
+  border-bottom: 2px solid #ededed;
+  h4 {
+    font-size: 1.2rem;
+  }
+  p {
+    color: #798192;
   }
 }

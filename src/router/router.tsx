@@ -18,7 +18,7 @@ function Router() {
         <header>
           <nav>
             <div id='header-bar'>
-              <NavLink onClick={() => setMenuShown(false)} to='characters'>
+              <NavLink onClick={() => setMenuShown(false)} to='/'>
                 <img id='header-logo' src={logoBlack} alt='' />
               </NavLink>
               <div
