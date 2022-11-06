@@ -1,5 +1,5 @@
 function Episode() {
-  return <h1>Episodes</h1>;
+  return <h1>Episode...</h1>;
 }
 
 export default Episode;

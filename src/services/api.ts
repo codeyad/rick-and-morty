@@ -22,8 +22,12 @@ export const getLocation = () => {
   return get("location");
 };
 
-export const getEpisode = () => {
+export const getEpisodes = () => {
   return get("episode");
+};
+
+export const getEpisode = (id: string) => {
+  return get(`episode/${id}`);
 };
 
 const get = async (endpoint: string, filters?: string, page: string = "") => {

@@ -18,6 +18,8 @@
 
 .section {
   width: 100%;
+  margin-bottom: 4rem;
+
   h3 {
     color: #8e8e93;
   }
@@ -32,16 +34,5 @@
   }
   img {
     margin-right: 0.5rem;
-  }
-}
-
-.tab {
-  padding: 0.5rem 0;
-  border-bottom: 2px solid #ededed;
-  h4 {
-    font-size: 1.2rem;
-  }
-  p {
-    color: #798192;
   }
 }
