@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Characters from "./../pages/characters";
 import Episodes from "../pages/episodes";
-import Location from "../pages/locations";
+import Location from "../pages/location";
 import CharacterProfile from "../pages/characterProfile";
 import PageNotFound from "./../pages/404";
 import Template from "./../components/template";
