@@ -5,6 +5,8 @@ import Logo from "../assets/images/location-logo.png";
 import Spinner from "../assets/images/spinner.gif";
 import Style from "./locations.module.scss";
 import { Link } from "react-router-dom";
+import Card from "../components/card";
+import LocationCardList from "../components/locationCardList";
 
 interface locationFilter {
   type: string;
@@ -118,14 +120,7 @@ function Locations() {
           <label htmlFor=''>ADVANCED FILTERS</label>
         </div>
       </div>
-      {locations.map(l => (
-        <div key={l.id} className={Style.list}>
-          <Link to={`/locations/${l.id}`}>
-            <h3>{l.name}</h3>
-            <p>{l.type}</p>
-          </Link>
-        </div>
-      ))}
+      <LocationCardList locationList={locations} />
       {loading ? <img id='spinner' src={Spinner} alt='' /> : null}
       {/* <CharacterModal
           isShown={openedModal}
