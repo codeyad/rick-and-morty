@@ -7,6 +7,10 @@ interface locationFilter {
   name?: string;
 }
 
+interface episodeFilter {
+  nameOrEpisode?: string;
+}
+
 export const getCharacterProfile = (id: string) => {
   return get(`character/${id}`);
 };
@@ -34,8 +38,15 @@ export const getLocation = (
   );
 };
 
-export const getEpisodes = () => {
-  return get("episode");
+export const getEpisodes = (
+  { nameOrEpisode }: episodeFilter,
+  page: string = ""
+) => {
+  return get(
+    "episode",
+    `name=${nameOrEpisode || ""}&episode=${nameOrEpisode || ""}`,
+    page
+  );
 };
 
 export const getEpisode = (id: string) => {

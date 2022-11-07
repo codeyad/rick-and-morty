@@ -101,7 +101,7 @@ function Locations() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilters({
       ...filters,
-      dimension: e.target.value.trim().replace(/\s+/g, "+"),
+      name: e.target.value.trim().replace(/\s+/g, "+"),
     });
   };
 
