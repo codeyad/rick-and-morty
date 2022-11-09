@@ -89,7 +89,13 @@ function Episodes() {
       getEpisodes({ name: filters.name }, currentPage),
       getEpisodes({ episode: filters.name }, currentPage),
     ])
-      .then((data: EpisodeResult[]) => {})
+      .then((data: EpisodeResult[]) => {
+        console.log(
+          [...(data[0]?.results || []), ...(data[1]?.results || [])].filter(
+            (a, i, ar) => ar.findIndex(a2 => a2.id === a.id) === i
+          )
+        );
+      })
       .finally(() => setLoading(false));
   };
 
