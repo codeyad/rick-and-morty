@@ -1,11 +1,12 @@
-import { debounce } from "lodash";
+import { debounce, filter } from "lodash";
 import { useEffect, useState } from "react";
 import Logo from "../assets/images/episode-logo.png";
 import Spinner from "../assets/images/spinner.gif";
 import EpisodeCardList from "../components/episodeCardList";
 import { getEpisode, getEpisodes } from "./../services/api";
 interface EpisodeFilter {
-  nameOrEpisode: string;
+  name: string;
+  episode: string;
 }
 interface Episode {
   id: number;
@@ -32,7 +33,8 @@ function Episodes() {
   const [episodeResult, setEpisodeResult] = useState<EpisodeResult>();
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<EpisodeFilter>({
-    nameOrEpisode: "",
+    name: "",
+    episode: "",
   });
 
   useEffect(() => {
@@ -47,7 +49,11 @@ function Episodes() {
   }, [episodeResult]);
 
   useEffect(() => {
-    getProcessedLocations();
+    if (filters.name) {
+      getFilteresEpisodes();
+    } else {
+      getProcessedLocations();
+    }
   }, [filters]);
 
   const handleScroll = () => {
@@ -65,7 +71,7 @@ function Episodes() {
 
   const getProcessedLocations = (currentPage = "") => {
     setLoading(true);
-    getEpisodes(filters, currentPage)
+    getEpisodes({}, currentPage)
       .then((data: EpisodeResult) => {
         if (data.results) {
           setEpisodes(
@@ -77,12 +83,24 @@ function Episodes() {
       .finally(() => setLoading(false));
   };
 
+  const getFilteresEpisodes = (currentPage = "") => {
+    setLoading(true);
+    Promise.all([
+      getEpisodes({ name: filters.name }, currentPage),
+      getEpisodes({ episode: filters.name }, currentPage),
+    ])
+      .then((data: EpisodeResult[]) => {})
+      .finally(() => setLoading(false));
+  };
+
   const debounceFunction = debounce(handleScroll, 1000);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim().replace(/\s+/g, "+");
+
     setFilters({
-      ...filters,
-      nameOrEpisode: e.target.value.trim().replace(/\s+/g, "+"),
+      name: value,
+      episode: value,
     });
   };
 
@@ -95,7 +113,7 @@ function Episodes() {
           onChange={debounce(handleInputChange, 1000)}
           name='name'
           id=''
-          placeholder='Filter by name...'
+          placeholder='Name or episode (ex.S01E01)...'
         />
       </div>
       <EpisodeCardList episodeList={episodes} />

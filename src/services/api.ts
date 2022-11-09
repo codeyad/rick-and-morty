@@ -8,7 +8,8 @@ interface locationFilter {
 }
 
 interface episodeFilter {
-  nameOrEpisode?: string;
+  name?: string;
+  episode?: string;
 }
 
 export const getCharacterProfile = (id: string) => {
@@ -39,14 +40,10 @@ export const getLocation = (
 };
 
 export const getEpisodes = (
-  { nameOrEpisode }: episodeFilter,
+  { name, episode }: episodeFilter,
   page: string = ""
 ) => {
-  return get(
-    "episode",
-    `name=${nameOrEpisode || ""}&episode=${nameOrEpisode || ""}`,
-    page
-  );
+  return get("episode", `name=${name || ""}&episode=${episode || ""}`, page);
 };
 
 export const getEpisode = (id: string) => {
