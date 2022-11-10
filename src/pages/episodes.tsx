@@ -18,13 +18,13 @@ interface Episode {
   created: string;
 }
 interface EpisodeResult {
-  info: {
+  info?: {
     count: number;
     pages: number;
     next: string;
     prev: string;
   };
-  results: Episode[];
+  results?: Episode[];
   error?: string;
 }
 
@@ -42,6 +42,7 @@ function Episodes() {
   }, []);
 
   useEffect(() => {
+    console.log(episodes);
     window.addEventListener("scroll", debounceFunction);
     return function cleanup() {
       window.removeEventListener("scroll", debounceFunction);
@@ -50,7 +51,7 @@ function Episodes() {
 
   useEffect(() => {
     if (filters.name) {
-      getFilteresEpisodes();
+      getFilteresEpisodes("");
     } else {
       getProcessedLocations();
     }
@@ -64,7 +65,10 @@ function Episodes() {
       window.removeEventListener("scroll", debounceFunction);
       setTimeout(() => {
         const currentPage = episodeResult?.info?.next?.split("page=")[1];
-        getProcessedLocations(currentPage);
+
+        filters.name
+          ? getFilteresEpisodes(currentPage || null)
+          : getProcessedLocations(currentPage);
       }, 500);
     }
   };
@@ -83,18 +87,32 @@ function Episodes() {
       .finally(() => setLoading(false));
   };
 
-  const getFilteresEpisodes = (currentPage = "") => {
+  const getFilteresEpisodes = (currentPage: string | null = "") => {
+    if (currentPage === null) return;
     setLoading(true);
     Promise.all([
       getEpisodes({ name: filters.name }, currentPage),
       getEpisodes({ episode: filters.name }, currentPage),
     ])
       .then((data: EpisodeResult[]) => {
-        console.log(
-          [...(data[0]?.results || []), ...(data[1]?.results || [])].filter(
-            (a, i, ar) => ar.findIndex(a2 => a2.id === a.id) === i
-          )
-        );
+        const episodesResult = [
+          ...(data[0]?.results || []),
+          ...(data[1]?.results || []),
+        ].filter((a, i, ar) => ar.findIndex(a2 => a2.id === a.id) === i);
+
+        const filteredEpisodes = !currentPage
+          ? episodesResult
+          : [...episodes, ...episodesResult].filter(
+              (a, i, ar) => ar.findIndex(a2 => a2.id === a.id) === i
+            );
+        setEpisodes(filteredEpisodes);
+
+        const episodeRes = episodeResult
+          ? data[0]?.info?.next?.length
+            ? data[0]
+            : data[1]
+          : {};
+        setEpisodeResult(episodeRes);
       })
       .finally(() => setLoading(false));
   };
