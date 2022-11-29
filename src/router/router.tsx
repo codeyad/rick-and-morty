@@ -56,7 +56,6 @@ function Router() {
           <Routes>
             <Route path='/' element={<Characters />} />
             <Route path='characters' element={<Characters />} />
-
             <Route path='characters/:id' element={<CharacterProfile />} />
             <Route path='episodes' element={<Episodes />} />
             <Route path='episodes/:id' element={<Episode />} />
