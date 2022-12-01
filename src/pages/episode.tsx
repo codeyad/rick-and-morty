@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import CharacterCard from "../components/characterCard";
 import { Character } from "../interface";
 import { getCharacterProfile, getEpisode } from "./../services/api";

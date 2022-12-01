@@ -1,6 +1,6 @@
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
-import { getLocation } from "./../services/api";
+import { getLocations } from "./../services/api";
 import Logo from "../assets/images/location-logo.png";
 import Spinner from "../assets/images/spinner.gif";
 import Style from "./locations.module.scss";
@@ -84,7 +84,7 @@ function Locations() {
 
   const getProcessedLocations = (currentPage = "") => {
     setLoading(true);
-    getLocation(filters, currentPage)
+    getLocations(filters, currentPage)
       .then((data: LocationReult) => {
         if (data.results) {
           setlocations(

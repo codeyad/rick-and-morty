@@ -12,8 +12,12 @@ interface episodeFilter {
   episode?: string;
 }
 
-export const getCharacterProfile = (id: string) => {
+export const getCharacterProfile = (id: string | string[]) => {
   return get(`character/${id}`);
+};
+
+export const getLocation = (id: string) => {
+  return get(`location/${id}`);
 };
 
 export const getCharacter = (
@@ -28,7 +32,7 @@ export const getCharacter = (
   );
 };
 
-export const getLocation = (
+export const getLocations = (
   { type, dimension, name }: locationFilter,
   page: string = ""
 ) => {
