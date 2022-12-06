@@ -1,15 +1,15 @@
-import Tab from "./tab";
+import Tab from './tab'
 
 interface Tab {
-  title: string;
-  description: string;
-  date?: string;
-  link?: string;
-  id: any;
+  title: string
+  description: string
+  date?: string
+  link?: string
+  id: any
 }
 
 interface Props {
-  list: Tab[];
+  list: Tab[]
 }
 
 const TabList = ({ list }: Props) => (
@@ -24,6 +24,6 @@ const TabList = ({ list }: Props) => (
       />
     ))}
   </>
-);
+)
 
-export default TabList;
+export default TabList

@@ -1,16 +1,16 @@
-import "./template.scss";
+import './template.scss'
 
-type Props = {
-  children?: React.ReactNode;
-};
+interface Props {
+  children?: React.ReactNode
+}
 
-function Template({ children }: Props) {
+function Template ({ children }: Props) {
   return (
     <>
       {children}
       <footer></footer>
     </>
-  );
+  )
 }
 
-export default Template;
+export default Template

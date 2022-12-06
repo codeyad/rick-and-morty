@@ -1,37 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 interface Character {
-  created: string;
-  episode: string[];
-  gender: string;
-  id: number;
-  image: string;
+  created: string
+  episode: string[]
+  gender: string
+  id: number
+  image: string
   location: {
-    name: string;
-    url: string;
-  };
-  name: string;
+    name: string
+    url: string
+  }
+  name: string
   origin: {
-    name: string;
-    url: string;
-  };
-  species: string;
-  status: string;
-  type: string;
-  url: string;
+    name: string
+    url: string
+  }
+  species: string
+  status: string
+  type: string
+  url: string
 }
 
 interface Props {
-  characters: Character[];
+  characters: Character[]
 }
 
 const CharacterCard = ({ characters }: Props) => {
   return (
     <>
-      {characters.length ? (
-        characters.map(c => {
-          const route = `/characters/${c.id}`;
-          return (
+      {(characters.length > 0)
+        ? (
+            characters.map(c => {
+              const route = `/characters/${c.id}`
+              return (
             <div key={c.id} className='card'>
               <Link to={route}>
                 <img src={c.image} alt='' />
@@ -39,17 +40,18 @@ const CharacterCard = ({ characters }: Props) => {
                 <p>{c.species}</p>
               </Link>
             </div>
-          );
-        })
-      ) : (
+              )
+            })
+          )
+        : (
         <div className='card'>
           <img src='/img/404.jpg' alt='' />
           <h3>404</h3>
           <p>No data found here</p>
         </div>
-      )}
+          )}
     </>
-  );
-};
+  )
+}
 
-export default CharacterCard;
+export default CharacterCard

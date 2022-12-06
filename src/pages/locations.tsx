@@ -1,109 +1,109 @@
-import { debounce } from "lodash";
-import { useEffect, useState } from "react";
-import { getLocations } from "./../services/api";
-import Logo from "../assets/images/location-logo.png";
-import Spinner from "../assets/images/spinner.gif";
-import Style from "./locations.module.scss";
-import { Link } from "react-router-dom";
-import Card from "../components/card";
-import LocationCardList from "../components/locationCardList";
+import { debounce } from 'lodash'
+import { useEffect, useState } from 'react'
+import { getLocations } from './../services/api'
+import Logo from '../assets/images/location-logo.png'
+import Spinner from '../assets/images/spinner.gif'
+import Style from './locations.module.scss'
+import { Link } from 'react-router-dom'
+import Card from '../components/card'
+import LocationCardList from '../components/locationCardList'
 
 interface locationFilter {
-  type: string;
-  dimension: string;
-  name?: string;
+  type: string
+  dimension: string
+  name?: string
 }
 
 interface Location {
-  id: any;
-  name: string;
-  type: string;
-  dimension: string;
-  residents: string[];
-  url: string;
-  created: string;
+  id: any
+  name: string
+  type: string
+  dimension: string
+  residents: string[]
+  url: string
+  created: string
 }
 
 interface LocationReult {
   info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: string;
-  };
-  results: Location[];
-  error?: string;
+    count: number
+    pages: number
+    next: string
+    prev: string
+  }
+  results: Location[]
+  error?: string
 }
 
-function Locations() {
-  const [openedModal, setOpenedModal] = useState(false);
-  const [locations, setlocations] = useState<Location[]>([]);
-  const [locationResult, setlocationResult] = useState<LocationReult>();
-  const [loading, setLoading] = useState(false);
+function Locations () {
+  const [openedModal, setOpenedModal] = useState(false)
+  const [locations, setlocations] = useState<Location[]>([])
+  const [locationResult, setlocationResult] = useState<LocationReult>()
+  const [loading, setLoading] = useState(false)
   const [filters, setFilters] = useState<locationFilter>({
-    type: "",
-    dimension: "",
-  });
+    type: '',
+    dimension: ''
+  })
 
   useEffect(() => {
-    getProcessedLocations();
-  }, []);
+    getProcessedLocations()
+  }, [])
 
   useEffect(() => {
-    window.addEventListener("scroll", debounceFunction);
-    return function cleanup() {
-      window.removeEventListener("scroll", debounceFunction);
-    };
-  }, [locationResult]);
+    window.addEventListener('scroll', debounceFunction)
+    return function cleanup () {
+      window.removeEventListener('scroll', debounceFunction)
+    }
+  }, [locationResult])
 
   useEffect(() => {
-    getProcessedLocations();
-  }, [filters]);
+    getProcessedLocations()
+  }, [filters])
 
   const handleModalSubmit = (selected: Location) => {
-    setFilters({ ...filters, ...selected });
-    setOpenedModal(false);
-  };
+    setFilters({ ...filters, ...selected })
+    setOpenedModal(false)
+  }
 
-  const handleOpenModal = () => setOpenedModal(true);
+  const handleOpenModal = () => setOpenedModal(true)
 
-  const handleCloseModal = () => setOpenedModal(false);
+  const handleCloseModal = () => setOpenedModal(false)
 
   const handleScroll = () => {
     const bottom =
-      window.innerHeight + window.scrollY >= document.body.offsetHeight;
+      window.innerHeight + window.scrollY >= document.body.offsetHeight
 
     if (bottom) {
-      window.removeEventListener("scroll", debounceFunction);
+      window.removeEventListener('scroll', debounceFunction)
       setTimeout(() => {
-        const currentPage = locationResult?.info?.next?.split("page=")[1];
-        getProcessedLocations(currentPage);
-      }, 500);
+        const currentPage = locationResult?.info?.next?.split('page=')[1]
+        getProcessedLocations(currentPage)
+      }, 500)
     }
-  };
+  }
 
-  const getProcessedLocations = (currentPage = "") => {
-    setLoading(true);
+  const getProcessedLocations = (currentPage = '') => {
+    setLoading(true)
     getLocations(filters, currentPage)
       .then((data: LocationReult) => {
         if (data.results) {
           setlocations(
             currentPage ? [...locations, ...data.results] : data.results
-          );
-          setlocationResult(data);
+          )
+          setlocationResult(data)
         }
       })
-      .finally(() => setLoading(false));
-  };
+      .finally(() => setLoading(false))
+  }
 
-  const debounceFunction = debounce(handleScroll, 1000);
+  const debounceFunction = debounce(handleScroll, 1000)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilters({
       ...filters,
-      name: e.target.value.trim().replace(/\s+/g, "+"),
-    });
-  };
+      name: e.target.value.trim().replace(/\s+/g, '+')
+    })
+  }
 
   return (
     <div>
@@ -128,7 +128,7 @@ function Locations() {
           onClose={handleCloseModal}
         /> */}
     </div>
-  );
+  )
 }
 
-export default Locations;
+export default Locations

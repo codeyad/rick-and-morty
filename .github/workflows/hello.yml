@@ -3,11 +3,22 @@ name: say hellow
 on:
   push:
     branches:
-      - "master"
+      - 'master'
 
 jobs:
   hello_world:
+    name: hello world
     runs-on: ubuntu-18.04
     steps:
       - name: Echo message
         run: echo 'Hello world'
+  lint:
+    name: eslint
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: 'execute eslint'
+        run: npm run eslint

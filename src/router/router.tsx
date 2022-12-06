@@ -1,18 +1,18 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Characters from "./../pages/characters";
-import Episodes from "../pages/episodes";
-import Location from "../pages/location";
-import CharacterProfile from "../pages/characterProfile";
-import PageNotFound from "./../pages/404";
-import Template from "./../components/template";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
-import logoBlack from "../assets/images/logo-black.png";
-import Episode from "../pages/episode";
-import Locations from "../pages/locations";
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
+import Characters from './../pages/characters'
+import Episodes from '../pages/episodes'
+import Location from '../pages/location'
+import CharacterProfile from '../pages/characterProfile'
+import PageNotFound from './../pages/404'
+import Template from './../components/template'
 
-function Router() {
-  const [menuShown, setMenuShown] = useState(false);
+import { useState } from 'react'
+import logoBlack from '../assets/images/logo-black.png'
+import Episode from '../pages/episode'
+import Locations from '../pages/locations'
+
+function Router () {
+  const [menuShown, setMenuShown] = useState(false)
 
   return (
     <Template>
@@ -25,7 +25,7 @@ function Router() {
               </NavLink>
               <div
                 onClick={() => setMenuShown(!menuShown)}
-                className={`hamburger-lines ${menuShown && "menu-opened"}`}
+                className={`hamburger-lines ${menuShown && 'menu-opened'}`}
               >
                 <span className='line line1'></span>
                 <span className='line line2'></span>
@@ -33,7 +33,7 @@ function Router() {
               </div>
             </div>
 
-            <ul className={`${menuShown && "menu-list-opened"}`}>
+            <ul className={`${menuShown && 'menu-list-opened'}`}>
               <li>
                 <NavLink onClick={() => setMenuShown(false)} to='characters'>
                   Characters
@@ -66,7 +66,7 @@ function Router() {
         </main>
       </BrowserRouter>
     </Template>
-  );
+  )
 }
 
-export default Router;
+export default Router

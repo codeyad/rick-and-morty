@@ -1,67 +1,73 @@
-import { Filters } from "../interface";
+import { Filters } from '../interface'
 
-const BASE_URL = "https://rickandmortyapi.com/api";
+const BASE_URL = 'https://rickandmortyapi.com/api'
 interface locationFilter {
-  type: string;
-  dimension: string;
-  name?: string;
+  type: string
+  dimension: string
+  name?: string
 }
 
 interface episodeFilter {
-  name?: string;
-  episode?: string;
+  name?: string
+  episode?: string
 }
 
-export const getCharacterProfile = (id: string | string[]) => {
-  return get(`character/${id}`);
-};
+export const getCharacterProfile = async (
+  id: string | string[]
+): Promise<any> => {
+  return await get(`character/${id}`)
+}
 
-export const getLocation = (id: string) => {
-  return get(`location/${id}`);
-};
+export const getLocation = async (id: string): Promise<any> => {
+  return await get(`location/${id}`)
+}
 
-export const getCharacter = (
+export const getCharacter = async (
   { species, gender, status, name }: Filters,
-  page: string = ""
-) => {
-  console.log(species);
-  return get(
-    "character",
+  page: string = ''
+): Promise<any> => {
+  console.log(species)
+  return await get(
+    'character',
     `species=${species}&gender=${gender}&status=${status}&name=${name}`,
     page
-  );
-};
+  )
+}
 
-export const getLocations = (
+export const getLocations = async (
   { type, dimension, name }: locationFilter,
-  page: string = ""
-) => {
-  return get(
-    "location",
-    `type=${type}&dimension=${dimension}&name=${name || ""}`,
+  page: string = ''
+): Promise<any> => {
+  return await get(
+    'location',
+    `type=${type}&dimension=${dimension}&name=${name || ''}`,
     page
-  );
-};
+  )
+}
 
-export const getEpisodes = (
+export const getEpisodes = async (
   { name, episode }: episodeFilter,
-  page: string = ""
-) => {
-  return get("episode", `name=${name || ""}&episode=${episode || ""}`, page);
-};
+  page: string = ''
+): Promise<any> => {
+  return await get(
+    'episode',
+    `name=${name || ''}&episode=${episode || ''}`,
+    page
+  )
+}
 
-export const getEpisode = (id: string) => {
-  return get(`episode/${id}`);
-};
+export const getEpisode = async (id: string): Promise<any> => {
+  return await get(`episode/${id}`)
+}
 
-const get = async (endpoint: string, filters?: string, page: string = "") => {
+const get = async (endpoint: string, filters?: string, page: string = '') => {
   try {
     const response = await fetch(
-      `${BASE_URL}/${endpoint}/?${filters ? filters + "&" : ""}page=${page}`
-    );
-    const data = await response.json();
-    return data;
+      `${BASE_URL}/${endpoint}/?${filters ? filters + '&' : ''}page=${page}`
+    )
+    const data = await response.json()
+    return data
   } catch (error) {
-    return [];
+    return []
   }
-};
+}

@@ -1,39 +1,39 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import CharacterCard from "../components/characterCard";
-import { Character } from "../interface";
-import { getCharacterProfile, getLocation } from "./../services/api";
-import styles from "./location.module.scss";
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import CharacterCard from '../components/characterCard'
+import { Character } from '../interface'
+import { getCharacterProfile, getLocation } from './../services/api'
+import styles from './location.module.scss'
 interface Location {
-  id: any;
-  name: string;
-  type: string;
-  dimension: string;
-  residents: string[];
-  url: string;
-  created: string;
+  id: any
+  name: string
+  type: string
+  dimension: string
+  residents: string[]
+  url: string
+  created: string
 }
 
 const Location = () => {
-  let params: any = useParams() ?? 0;
-  const [location, setLocation] = useState<Location | null>(null);
-  const [characters, setCharacters] = useState<Character[] | []>([]);
+  const params: any = useParams() ?? 0
+  const [location, setLocation] = useState<Location | null>(null)
+  const [characters, setCharacters] = useState<Character[] | []>([])
   useEffect(() => {
     getLocation(params.id)
       .then((data: Location) => {
-        setLocation(data);
+        setLocation(data)
         const charactersId = data.residents.map(c => {
-          const id = c.split("character/")[1];
-          return id;
-        });
-        //TODO: refactor to have the same behavior that
+          const id = c.split('character/')[1]
+          return id
+        })
+        // TODO: refactor to have the same behavior that
         // home page because of errors
         getCharacterProfile(charactersId).then(res => {
-          setCharacters(res);
-        });
+          setCharacters(res)
+        })
       })
-      .finally(() => {});
-  }, []);
+      .finally(() => {})
+  }, [])
   return (
     <>
       <h1 className={styles.title}>{location?.name}</h1>
@@ -52,7 +52,7 @@ const Location = () => {
         <CharacterCard characters={characters} />
       </section>
     </>
-  );
-};
+  )
+}
 
-export default Location;
+export default Location
